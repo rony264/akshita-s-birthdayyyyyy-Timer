@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akshita's 18th Birthday Countdown 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        color: white;
+        overflow: hidden;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .timer {
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-top: 20px;
+    }
+
+    .message {
+        font-size: 1.8rem;
+        margin-top: 20px;
+        display: none;
+        animation: pop 1s ease forwards;
+    }
+
+    @keyframes pop {
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+        h1 { font-size: 1.5rem; }
+        .timer { font-size: 2rem; }
+        .message { font-size: 1.5rem; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🎂 Countdown to Akshita's 18th Birthday 🎉</h1>
+    <div class="timer" id="countdown">Loading...</div>
+    <div class="message" id="birthdayMessage">
+        🎉 Happy 18th Birthday Akshita ❤️ 🎂<br>
+        Welcome to Adulthood ✨
+    </div>
+</div>
+
+<script>
+    // SET THE BIRTHDAY DATE HERE (IST Time)
+    // Format: YYYY-MM-DDTHH:MM:SS
+    // Example: 2026-03-01T00:00:00
+    const birthdayIST = new Date("2026-03-01T00:00:00+05:30").getTime();
+
+    const countdown = document.getElementById("countdown");
+    const message = document.getElementById("birthdayMessage");
+
+    const timer = setInterval(function () {
+
+        const now = new Date().getTime();
+        const distance = birthdayIST - now;
+
+        if (distance < 0) {
+            clearInterval(timer);
+            countdown.style.display = "none";
+            message.style.display = "block";
+            launchConfetti();
+            return;
+        }
+
+        const hours = Math.floor((distance / (1000 * 60 * 60)));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdown.innerHTML = 
+            hours.toString().padStart(2, '0') + "h : " +
+            minutes.toString().padStart(2, '0') + "m : " +
+            seconds.toString().padStart(2, '0') + "s";
+
+    }, 1000);
+
+    function launchConfetti() {
+        var duration = 5 * 1000;
+        var end = Date.now() + duration;
+
+        (function frame() {
+            confetti({
+                particleCount: 5,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 }
+            });
+            confetti({
+                particleCount: 5,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 }
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        }());
+    }
+</script>
+
+</body>
+</html>
